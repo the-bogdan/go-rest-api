@@ -1,0 +1,4 @@
+GET http://{{host}}/hello
+Accept: application/json
+
+###

@@ -1,0 +1,14 @@
+info:
+  contact: {}
+paths:
+  /hello:
+    get:
+      responses:
+        "200":
+          description: Hello World!!!
+        "400":
+          description: ""
+      summary: Hello simple request returns "Hello world"
+      tags:
+      - Test
+swagger: "2.0"
