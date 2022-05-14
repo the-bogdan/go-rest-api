@@ -2,14 +2,14 @@ all: help
 
 .PHONY: help
 help:
-	@echo "|---- Code quality ----|"
-	@echo "toolset                  - устанавливает необходимые утилиты для работы с кодом (test, lint, fmt)"
-	@echo "                         !!! Внимание, перед запуск следующих команд необходимо выполнить toolset "
-	@echo "lint                     - запуск линтера (golangci-lint)"
-	@echo "fmt                      - форматирование кода (gofumpt)"
-	@echo "test                     - запуск тестов (gotestsum)"
-	@echo "\n|---- Swagger -------|"
-	@echo "swagger           		- Обновить документацию в swagger"
+	@echo "|--!!! Before other commands you need to execute \`make toolset\`!!!--|"
+	@echo "toolset                  - install the necessary tools (test, lint, fmt)"
+	@echo "\n|---- Code quality ----|"
+	@echo "lint                     - run linters (golangci-lint)"
+	@echo "fmt                      - code formatting (gofumpt)"
+	@echo "test                     - run unit tests (gotestsum)"
+	@echo "\n|---- Docs ----------|"
+	@echo "swagger           		- update swagger docs"
 
 #----------Code quality----------------------------------------------------------------------------#
 .PHONY: toolset
@@ -18,18 +18,16 @@ toolset:
 
 .PHONY: lint
 lint:
-	cd app && @../tools/bin/golangci-lint run
+	@cd app && ../tools/bin/golangci-lint run
 
 .PHONY: fmt
 fmt:
-	@tools/bin/gofumpt -l -w .
+	@cd app && ../tools/bin/gofumpt -l -w .
 
 .PHONY: test
 test:
-	@tools/bin/gotestsum ./...
-
-
-#----------Swagger---------------------------------------------------------------------------------#
+	@cd app && ../tools/bin/gotestsum ./...
+#----------Docs------------------------------------------------------------------------------------#
 
 .PHONY: swagger
 swagger:

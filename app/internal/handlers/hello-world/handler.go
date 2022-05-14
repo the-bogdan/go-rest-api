@@ -8,11 +8,14 @@ import (
 
 const URL = "/hello"
 
-type Handler struct {
+type handler struct{}
+
+func NewHandler() internal.Handler {
+	return &handler{}
 }
 
-func (h *Handler) Register(router internal.Router) {
-	router.HandlerFunc(http.MethodGet, URL, h.Hello)
+func (h *handler) Register(router internal.Router) {
+	router.HandlerFunc(http.MethodGet, URL, h.hello)
 }
 
 // Hello
@@ -21,7 +24,7 @@ func (h *Handler) Register(router internal.Router) {
 // @Success 200 "Hello World!!!"
 // @Failure 400
 // @Router /hello [get]
-func (h *Handler) Hello(w http.ResponseWriter, r *http.Request) {
+func (h *handler) hello(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	w.Write([]byte("Hello world!!!"))
 }

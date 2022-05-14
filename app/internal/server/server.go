@@ -10,11 +10,9 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/rs/cors"
-	httpSwagger "github.com/swaggo/http-swagger"
 
 	_ "github.com/the-bogdan/go-rest-api/app/docs"
 	"github.com/the-bogdan/go-rest-api/app/internal/config"
-	hello_world "github.com/the-bogdan/go-rest-api/app/internal/handlers/hello-world"
 	"github.com/the-bogdan/go-rest-api/app/pkg/logging"
 )
 
@@ -29,13 +27,8 @@ func NewApp(cfg *config.Config, logger *logging.Logger) (App, error) {
 	logger.Info("router initializing")
 	router := httprouter.New()
 
-	logger.Info("swagger docs initializing")
-	router.Handler(http.MethodGet, "/swagger", http.RedirectHandler("/swagger/index.html", http.StatusMovedPermanently))
-	router.Handler(http.MethodGet, "/swagger/*any", httpSwagger.WrapHandler)
-
 	logger.Info("api routes initializing")
-	helloWorld := hello_world.Handler{}
-	helloWorld.Register(router)
+	registerHandlers(router)
 
 	return App{
 		cfg:    cfg,

@@ -16,5 +16,4 @@ func main() {
 		logger.Fatal(err)
 	}
 	app.Run()
-
 }

@@ -15,12 +15,13 @@ type Config struct {
 		Host string `env:"HOST" env-default:"127.0.0.1"`
 		Port string `env:"PORT" env-default:"9090"`
 	}
-	Postgres struct {
-	}
+	Postgres struct{}
 }
 
-var instance *Config
-var once sync.Once
+var (
+	instance *Config
+	once     sync.Once
+)
 
 // GetConfig read envs and write them to Config instance
 func GetConfig() *Config {
