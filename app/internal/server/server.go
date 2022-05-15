@@ -12,22 +12,21 @@ import (
 	"github.com/rs/cors"
 
 	_ "github.com/the-bogdan/go-rest-api/app/docs"
-	"github.com/the-bogdan/go-rest-api/app/internal/config"
+	"github.com/the-bogdan/go-rest-api/app/internal"
 	"github.com/the-bogdan/go-rest-api/app/pkg/logging"
 )
 
 type App struct {
-	cfg        *config.Config
-	logger     *logging.Logger
+	cfg        *internal.Config
+	logger     logging.Logger
 	router     *httprouter.Router
 	httpServer *http.Server
 }
 
-func NewApp(cfg *config.Config, logger *logging.Logger) (App, error) {
+func NewApp(cfg *internal.Config, logger logging.Logger) (App, error) {
 	logger.Info("router initializing")
-	router := httprouter.New()
 
-	logger.Info("api routes initializing")
+	router := httprouter.New()
 	registerHandlers(router)
 
 	return App{
@@ -41,7 +40,7 @@ func (a *App) Run() {
 	a.logger.Info("starting HTTP server")
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", a.cfg.Listen.Host, a.cfg.Listen.Port))
 	if err != nil {
-		a.logger.Fatalln(err)
+		a.logger.Fatal(err)
 	}
 
 	c := cors.New(cors.Options{

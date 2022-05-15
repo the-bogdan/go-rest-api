@@ -1,13 +1,16 @@
 package main
 
 import (
-	"github.com/the-bogdan/go-rest-api/app/internal/config"
+	"github.com/the-bogdan/go-rest-api/app/internal"
 	"github.com/the-bogdan/go-rest-api/app/internal/server"
+	"github.com/the-bogdan/go-rest-api/app/pkg/config"
 	"github.com/the-bogdan/go-rest-api/app/pkg/logging"
 )
 
 func main() {
-	cfg := config.GetConfig()
+
+	cfg := &internal.Config{}
+	config.GetConfig(cfg)
 
 	logger := logging.GetLogger(cfg.LogLevel)
 

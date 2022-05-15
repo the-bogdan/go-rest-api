@@ -1,0 +1,22 @@
+GET http://{{host}}/users/10
+Accept: application/json
+
+###
+GET http://{{host}}/users
+Accept: application/json
+
+###
+POST http://{{host}}/users
+Content-Type: application/json
+
+{}
+
+###
+PUT http://{{host}}/users/10
+Accept: application/json
+
+{}
+
+###
+DELETE http://{{host}}/users/10
+Accept: application/json

@@ -25,6 +25,6 @@ func (h *handler) Register(router internal.Router) {
 // @Failure 400
 // @Router /hello [get]
 func (h *handler) hello(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Hello world!!!"))
 }

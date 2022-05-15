@@ -1,12 +1,19 @@
 package users
 
 import (
+	"fmt"
 	"net/http"
+
+	// TODO remove dependency on httprouter
+	"github.com/julienschmidt/httprouter"
 
 	"github.com/the-bogdan/go-rest-api/app/internal"
 )
 
-const URL = "/users/"
+const (
+	URL               = "/users"
+	IDENTIFIER string = "id"
+)
 
 // handler struct for working with users
 type handler struct{}
@@ -20,16 +27,16 @@ func NewHandler() internal.Handler {
 func (h *handler) Register(router internal.Router) {
 	// Get instances
 	router.HandlerFunc(http.MethodGet, URL, h.getList)
-	router.HandlerFunc(http.MethodGet, URL+"id/", h.getById)
+	router.HandlerFunc(http.MethodGet, fmt.Sprintf("%s/:%s", URL, IDENTIFIER), h.getById)
 
 	// Create instances
 	router.HandlerFunc(http.MethodPost, URL, h.create)
 
 	// Update instances
-	router.HandlerFunc(http.MethodPut, URL+"id/", h.update)
+	router.HandlerFunc(http.MethodPut, fmt.Sprintf("%s/:%s", URL, IDENTIFIER), h.update)
 
 	// Delete instances
-	router.HandlerFunc(http.MethodDelete, URL+"id/", h.delete)
+	router.HandlerFunc(http.MethodDelete, fmt.Sprintf("%s/:%s", URL, IDENTIFIER), h.delete)
 }
 
 // getById
@@ -39,25 +46,31 @@ func (h *handler) Register(router internal.Router) {
 // @Failure 400
 // @Router /user [get]
 func (h *handler) getById(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	w.Write([]byte("{getById}"))
+	params := httprouter.ParamsFromContext(r.Context())
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("{getById %s}", params.ByName(IDENTIFIER))))
 }
 
 func (h *handler) getList(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("[getList]"))
 }
 
 func (h *handler) create(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("[create]"))
 }
 
 func (h *handler) update(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	w.Write([]byte("[update]"))
+	params := httprouter.ParamsFromContext(r.Context())
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("[update %s]", params.ByName(IDENTIFIER))))
 }
 
 func (h *handler) delete(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(204)
+	//params := httprouter.ParamsFromContext(r.Context())
+
+	w.WriteHeader(http.StatusNoContent)
 }
