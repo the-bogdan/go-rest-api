@@ -37,7 +37,10 @@ func NewApp(cfg *internal.Config, logger logging.Logger) (App, error) {
 }
 
 func (a *App) Run() {
-	a.logger.Info("starting HTTP server")
+	a.logger.WithFields(map[string]interface{}{
+		"IS_PROD":   a.cfg.IsProd,
+		"LOG_LEVEL": a.cfg.LogLevel,
+	}).Info("starting HTTP server")
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", a.cfg.Listen.Host, a.cfg.Listen.Port))
 	if err != nil {
 		a.logger.Fatal(err)

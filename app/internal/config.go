@@ -6,7 +6,7 @@ type Config struct {
 
 	Listen struct {
 		Host string `env:"HOST" env-default:"127.0.0.1"`
-		Port string `env:"PORT" env-default:"9090"`
+		Port string `env:"PORT" env-default:"9990"`
 	}
 	Postgres struct{}
 }
