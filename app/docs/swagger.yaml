@@ -11,4 +11,51 @@ paths:
       summary: Hello simple request returns "Hello world"
       tags:
       - Test
+  /users:
+    get:
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+      summary: get users list
+      tags:
+      - Users
+    post:
+      responses:
+        "201":
+          description: ""
+        "400":
+          description: ""
+      summary: create user
+      tags:
+      - Users
+  /users/:id:
+    delete:
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: ""
+      summary: delete user by id
+      tags:
+      - Users
+    get:
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+      summary: get user by id
+      tags:
+      - Users
+    put:
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+      summary: update user info by user id
+      tags:
+      - Users
 swagger: "2.0"

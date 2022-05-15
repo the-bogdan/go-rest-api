@@ -31,6 +31,80 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "get users list",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "create user",
+                "responses": {
+                    "201": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/users/:id": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "get user by id",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "update user info by user id",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete user by id",
+                "responses": {
+                    "204": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            }
         }
     }
 }`

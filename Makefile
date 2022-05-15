@@ -27,9 +27,19 @@ fmt:
 .PHONY: test
 test:
 	@cd app && ../tools/bin/gotestsum ./...
-#----------Docs------------------------------------------------------------------------------------#
 
+#----------Docs------------------------------------------------------------------------------------#
 .PHONY: swagger
 swagger:
 	@tools/bin/swag init -g ./app/cmd/server/main.go -o ./app/docs
+
+#----------Build-----------------------------------------------------------------------------------#
+.PHONY: build
+build:
+	@cd app && go build -o bin/app ./cmd/server
+
+.PHONY: build-linux
+build-linux:
+	@cd app && GOOS=linux GOARCH=amd64 go build -o bin/app-linux ./cmd/server
+
 
