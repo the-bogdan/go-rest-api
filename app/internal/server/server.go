@@ -12,36 +12,33 @@ import (
 	"github.com/rs/cors"
 
 	_ "github.com/the-bogdan/go-rest-api/app/docs"
-	"github.com/the-bogdan/go-rest-api/app/internal"
 	"github.com/the-bogdan/go-rest-api/app/pkg/logging"
 )
 
 type App struct {
-	cfg        *internal.Config
 	logger     logging.Logger
 	router     *httprouter.Router
 	httpServer *http.Server
+	host       string
+	port       string
 }
 
-func NewApp(cfg *internal.Config, logger logging.Logger) (App, error) {
+func NewApp(host, port string, logger logging.Logger) (App, error) {
 	logger.Info("router initializing")
 
 	router := httprouter.New()
 	registerHandlers(router)
 
 	return App{
-		cfg:    cfg,
 		logger: logger,
 		router: router,
+		host:   host,
+		port:   port,
 	}, nil
 }
 
 func (a *App) Run() {
-	a.logger.WithFields(map[string]interface{}{
-		"IS_PROD":   a.cfg.IsProd,
-		"LOG_LEVEL": a.cfg.LogLevel,
-	}).Info("starting HTTP server")
-	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", a.cfg.Listen.Host, a.cfg.Listen.Port))
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", a.host, a.port))
 	if err != nil {
 		a.logger.Fatal(err)
 	}
@@ -63,7 +60,7 @@ func (a *App) Run() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	a.logger.Infof("bind application to host http://%s:%s", a.cfg.Listen.Host, a.cfg.Listen.Port)
+	a.logger.Infof("bind application to host http://%s:%s", a.host, a.port)
 
 	if err = a.httpServer.Serve(listener); err != nil {
 		switch {

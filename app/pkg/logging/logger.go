@@ -46,7 +46,7 @@ func (l *logger) WithFields(fields map[string]interface{}) Logger {
 	}
 }
 
-func GetLogger(logLevel string) Logger {
+func Get(logLevel string) Logger {
 	l := logrus.New()
 	// pretty output
 	l.SetFormatter(&logrus.TextFormatter{

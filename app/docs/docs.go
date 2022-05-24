@@ -16,22 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello": {
-            "get": {
-                "tags": [
-                    "Test"
-                ],
-                "summary": "Hello simple request returns \"Hello world\"",
-                "responses": {
-                    "200": {
-                        "description": "Hello World!!!"
-                    },
-                    "400": {
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/users": {
             "get": {
                 "tags": [

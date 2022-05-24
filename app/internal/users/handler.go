@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
-
 	// TODO remove dependency on httprouter
 	"github.com/julienschmidt/httprouter"
 
@@ -49,20 +47,9 @@ func (h *handler) Register(router internal.Router) {
 // @Router /users/:id [get]
 func (h *handler) getById(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
-	id, err := strconv.Atoi(params.ByName(IDENTIFIER))
-
-	if err != nil {
-		msg := ErrorMsg{
-			Msg: fmt.Sprintf("wrong identifier %s. must be int", params.ByName(IDENTIFIER)),
-			Err: err.Error(),
-		}
-		w.WriteHeader(http.StatusBadRequest)
-		body, _ := json.Marshal(msg)
-		w.Write(body)
-	}
 
 	u := User{
-		Id:         id,
+		Id:         params.ByName(IDENTIFIER),
 		FirstName:  "Ermek",
 		LastName:   "Pidor",
 		MiddleName: "Пиздатый",
@@ -86,7 +73,7 @@ func (h *handler) getById(w http.ResponseWriter, r *http.Request) {
 func (h *handler) getList(w http.ResponseWriter, r *http.Request) {
 	usersList := []User{
 		{
-			Id:         0,
+			Id:         "0",
 			FirstName:  "Богдан",
 			LastName:   "Паршинцев",
 			MiddleName: "Backend",
@@ -95,7 +82,7 @@ func (h *handler) getList(w http.ResponseWriter, r *http.Request) {
 			Status:     "Че покурим?",
 		},
 		{
-			Id:         1,
+			Id:         "1",
 			FirstName:  "Ermek",
 			LastName:   "Pidor",
 			MiddleName: "Пиздатый",
@@ -104,7 +91,7 @@ func (h *handler) getList(w http.ResponseWriter, r *http.Request) {
 			Status:     "Бля заебался курить и в бистро сидеть",
 		},
 		{
-			Id:        2,
+			Id:        "2",
 			FirstName: "Aidar",
 			LastName:  "Slojnoe",
 			Age:       16,

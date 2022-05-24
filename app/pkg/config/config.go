@@ -20,8 +20,8 @@ import (
 //	}
 //}
 
-// GetConfig read envs and write them to the received config instance
-func GetConfig(config interface{}) {
+// ReadEnv read envs and write them to the received config instance
+func ReadEnv(config interface{}) {
 	// read envs only once
 	if err := cleanenv.ReadEnv(config); err != nil {
 		help, _ := cleanenv.GetDescription(config, nil)
